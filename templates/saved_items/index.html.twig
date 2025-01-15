@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Saved Items{% endblock %}
+
+{% block body %}
+    <h1>All Saved Items</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Item</th>
+                <th>DateCreated</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for saved_item in saved_items %}
+            <tr>
+                <td>{{ saved_item.id }}</td>
+                <td>{{ saved_item.item }}</td>
+                <td>{{ saved_item.dateCreated ? saved_item.dateCreated|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_saved_items_show', {'id': saved_item.id}) }}">show</a>
+                    <a href="{{ path('app_saved_items_edit', {'id': saved_item.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_saved_items_new') }}">Create new</a>
+{% endblock %}
