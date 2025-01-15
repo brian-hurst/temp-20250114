@@ -84,7 +84,8 @@
             "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "php bin/console doctrine:migrations:migrate --no-interaction"
         ],
         "post-update-cmd": [
             "@auto-scripts"

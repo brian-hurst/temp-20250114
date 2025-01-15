@@ -1,6 +1,6 @@
 # Temp-20250114 Deployment:
 1) Clone Project
-   1) ``git@github.com:brian-hurst/temp-20250114.git && cd temp-20250114``
+   1) ``git clone git@github.com:brian-hurst/temp-20250114.git && cd temp-20250114``
 2) Build the default NGINX PHP FPM Docker Image.
    1) ``docker build -t temp-20250114 . -f Dockerfile --no-cache``
 3) Run the Container's.
