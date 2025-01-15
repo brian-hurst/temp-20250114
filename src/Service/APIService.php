@@ -39,7 +39,7 @@ class APIService implements LoggerAwareInterface
                 $model = (new DisplayModel())
                     ->setTitle($doc['title'])
                     ->setItem($doc['key']);
-                $model->setImage('https://openlibrary.org/images/icons/avatar_book-lg.png');
+
                 if(array_key_exists('cover_edition_key', $doc)){
                     $model->setImage('https://covers.openlibrary.org/b/olid/' . $doc['cover_edition_key'] . '-L.jpg');
                 }

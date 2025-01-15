@@ -34,28 +34,25 @@ final class SavedItemsControllerTest extends WebTestCase{
         $crawler = $this->client->request('GET', $this->path);
 
         self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('SavedItem index');
+        self::assertPageTitleContains('Search');
     }
 
     public function testNew(): void
     {
-        $this->markTestIncomplete();
         $this->client->request('GET', sprintf('%snew', $this->path));
-
         self::assertResponseStatusCodeSame(200);
 
         $this->client->submitForm('Save', [
-            'saved_item[item]' => 'Testing',
+            'saved_items[item]' => 'Testing',
         ]);
 
-        self::assertResponseRedirects($this->path);
+        self::assertResponseRedirects('/saved/items');
 
         self::assertSame(1, $this->savedItemRepository->count([]));
     }
 
     public function testShow(): void
     {
-        $this->markTestIncomplete();
         $fixture = new SavedItems();
         $fixture->setItem('Test');
 
@@ -65,13 +62,12 @@ final class SavedItemsControllerTest extends WebTestCase{
         $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
 
         self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('SavedItem');
+        self::assertPageTitleContains('Search');
 
     }
 
     public function testEdit(): void
     {
-        $this->markTestIncomplete();
         $fixture = new SavedItems();
         $fixture->setItem('Value');
 
@@ -81,20 +77,18 @@ final class SavedItemsControllerTest extends WebTestCase{
         $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
 
         $this->client->submitForm('Update', [
-            'saved_item[item]' => 'Something New',
+            'saved_items[item]' => 'Something New',
         ]);
 
-        self::assertResponseRedirects('/saved/items/');
+        self::assertResponseRedirects('/saved/items');
 
         $fixture = $this->savedItemRepository->findAll();
 
         self::assertSame('Something New', $fixture[0]->getItem());
-        self::assertSame('Something New', $fixture[0]->getDateCreated());
     }
 
     public function testRemove(): void
     {
-        $this->markTestIncomplete();
         $fixture = new SavedItems();
         $fixture->setItem('Value');
 
@@ -104,7 +98,7 @@ final class SavedItemsControllerTest extends WebTestCase{
         $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
         $this->client->submitForm('Delete');
 
-        self::assertResponseRedirects('/saved/items/');
+        self::assertResponseRedirects('/saved/items');
         self::assertSame(0, $this->savedItemRepository->count([]));
     }
 }
